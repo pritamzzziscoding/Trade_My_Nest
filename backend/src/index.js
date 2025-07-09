@@ -1,0 +1,30 @@
+import express from "express"
+import { config } from "dotenv"
+import { connectDB } from "./libs/db.js"
+import authRoute from "./routes/auth.route.js"
+import hostelRoute from "./routes/hostel.route.js"
+import cookieParser from "cookie-parser"
+import cors from "cors"
+
+config()
+
+const PORT = process.env.PORT
+const MONGO_URI = process.env.MONGO_URI
+const app = express()
+
+app.use(express.json())
+app.use(cookieParser())
+
+app.use(cors({
+    origin : "http://localhost:5173",
+    credentials : true
+}))
+
+//route middleware
+app.use("/api/auth", authRoute)
+app.use("/api/hostel", hostelRoute)
+
+app.listen(PORT, async () => {
+    await connectDB(MONGO_URI)
+    console.log(`server is listening to PORT : ${PORT}`)
+})
