@@ -5,8 +5,10 @@ import authRoute from "./routes/auth.route.js"
 import hostelRoute from "./routes/hostel.route.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import path from "path"
 
 config()
+const __dirname = path.resolve()
 
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
