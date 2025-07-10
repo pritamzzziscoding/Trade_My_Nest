@@ -41,7 +41,6 @@ export const Home = () => {
         const filtered = hostels.filter((hostel)=>{
             return isSubsequence(currentHostel, hostel.current) && isSubsequence(desiredHostel, hostel.desired)
         })
-        console.log(filtered)
         setFilteredHostel(filtered)
     };
 
