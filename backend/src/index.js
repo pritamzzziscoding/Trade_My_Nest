@@ -24,6 +24,13 @@ app.use(cors({
 app.use("/api/auth", authRoute)
 app.use("/api/hostel", hostelRoute)
 
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
+    app.get("/:li", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    })
+}
+
 app.listen(PORT, async () => {
     await connectDB(MONGO_URI)
     console.log(`server is listening to PORT : ${PORT}`)
