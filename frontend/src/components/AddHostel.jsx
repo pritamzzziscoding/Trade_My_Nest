@@ -27,6 +27,8 @@ export const HostelRequestForm = ({setRefresh}) => {
         desired: "",
         floor: "",
         block: "",
+        desiredFloor : "",
+        desiredBlock : "",
         description: "",
     });
     const [descCount, setDescCount] = useState(0);
@@ -135,7 +137,7 @@ export const HostelRequestForm = ({setRefresh}) => {
             <div className="flex gap-4">
                 <div className="form-control flex-1">
                     <label className="label font-semibold" htmlFor="floor">
-                        Floor
+                        Current Floor
                     </label>
                     <select
                         name="floor"
@@ -158,13 +160,61 @@ export const HostelRequestForm = ({setRefresh}) => {
 
                 <div className="form-control flex-1">
                     <label className="label font-semibold" htmlFor="block">
-                        Block
+                        Current Block
                     </label>
                     <select
                         name="block"
                         id="block"
                         className="select select-bordered w-full"
                         value={form.block}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="" disabled>
+                            Select block
+                        </option>
+                        {blocks.map((block) => (
+                            <option key={block} value={block}>
+                                {block}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <div className="flex gap-4">
+                <div className="form-control flex-1">
+                    <label className="label font-semibold" htmlFor="desiredFloor">
+                        Desired Floor
+                    </label>
+                    <select
+                        name="desiredFloor"
+                        id="desiredFloor"
+                        className="select select-bordered w-full"
+                        value={form.desiredFloor}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="" disabled>
+                            Select floor
+                        </option>
+                        {floors.map((floor) => (
+                            <option key={floor} value={floor}>
+                                {floor}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-control flex-1">
+                    <label className="label font-semibold" htmlFor="desiredBlock">
+                        Desired Block
+                    </label>
+                    <select
+                        name="desiredBlock"
+                        id="desiredBlock"
+                        className="select select-bordered w-full"
+                        value={form.desiredBlock}
                         onChange={handleChange}
                         required
                     >

@@ -7,7 +7,7 @@ config()
 
 export const addHostel = async (req, res) => {
     const userId = req.user._id
-    const {current, desired, floor, block, description} = req.body
+    const {current, desired, floor, block, desiredFloor, desiredBlock, description} = req.body
     try { 
         const hostel = await Hostel.findOne({userId})
         if(hostel){
@@ -19,6 +19,8 @@ export const addHostel = async (req, res) => {
             desired,
             floor,
             block,
+            desiredFloor,
+            desiredBlock,
             description
         })
         await newHostel.save()
@@ -110,9 +112,9 @@ export const sendRequest = async (req, res) => {
 
 export const updateRequest = async (req, res) => {
     const userId = req.user._id
-    const {current, desired, block, floor, description} = req.body
+    const {current, desired, block, floor, desiredBlock, desiredFloor, description} = req.body
     try {
-        const data = await Hostel.findOneAndUpdate({userId}, {current, desired, block, floor, description});
+        const data = await Hostel.findOneAndUpdate({userId}, {current, desired, block, floor, desiredBlock, desiredFloor, description});
         res.status(200).json({success : true, message : "Request Updated Successfully"})
     } catch (error) {
         console.log(error.message)

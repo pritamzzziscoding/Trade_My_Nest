@@ -11,7 +11,7 @@ import { useHostelStore } from "../stores/useHostelStore";
 
 export const HostelRequestCard = ({hostel, setRefresh, setAddData}) => {
     
-    const {userId, current, desired, floor, block, description} = hostel
+    const {userId, current, desired, floor, block, desiredFloor, desiredBlock, description} = hostel
     const { authUser, getting } = useAuthStore()
     const {deleteHostel, sendRequest, sending} = useHostelStore()
     const [flipped, setFlipped] = useState(false);
@@ -75,15 +75,11 @@ export const HostelRequestCard = ({hostel, setRefresh, setAddData}) => {
                         </div>
                         <div className="flex items-center gap-3">
                             <FaUniversity className="text-warning text-lg" />
-                            <span>Desired: <span className="font-semibold underline text-warning">{desired}</span></span>
+                            <span>Desired: <span className="font-semibold underline text-warning">{desired}/{desiredFloor}/{desiredBlock}</span></span>
                         </div>
                         <div className="flex items-center gap-3">
                             <FaUniversity className="text-error text-lg" />
-                        <span>Current: <span className="font-semibold underline text-error">{current}</span></span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <FaBuilding className="text-secondary text-lg" />
-                            <span>Floor/Block: {floor}/{block}</span>
+                        <span>Current: <span className="font-semibold underline text-error">{current}/{floor}/{block}</span></span>
                         </div>
                         {/* Truncated Description */}
                         <div className="flex items-start gap-3">

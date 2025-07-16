@@ -19,6 +19,8 @@ const hostels = [
     "H10",
     "H15",
 ];
+const floors = ["0", "1", "2", "3", "4", "5", "6"];
+const blocks = ["A", "B", "C", "D", "E", "F", "G"];
 
 export const Home = () => {
 
@@ -28,18 +30,26 @@ export const Home = () => {
     const [filteredHostel, setFilteredHostel] = useState([])
     const [currentHostel, setCurrentHostel] = useState("");
     const [desiredHostel, setDesiredHostel] = useState("");
+    const [currentBlock, setCurrentBlock] = useState("");
+    const [currentFloor, setCurrentFloor] = useState("");
+    const [desiredBlock, setDesiredBlock] = useState("");
+    const [desiredFloor, setDesiredFloor] = useState("");
+    const [showFilter, setShowFilter] = useState(false);
     const [refresh, setRefresh] = useState(true);
     
     const handleFilter = (e) => {
         e.preventDefault();
         setRefresh(!refresh)
+        setShowFilter(false)
     };
 
     const getAll = async () => {
         const hostels = await getAllHostel();
+        console.log(hostels)
         hostels.reverse();
         const filtered = hostels.filter((hostel)=>{
-            return isSubsequence(currentHostel, hostel.current) && isSubsequence(desiredHostel, hostel.desired)
+            return isSubsequence(currentHostel, hostel.current) && isSubsequence(desiredHostel, hostel.desired) &&
+            isSubsequence(currentBlock, hostel.block) && isSubsequence(currentFloor, hostel.floor) && isSubsequence(desiredBlock, hostel.desiredBlock) && isSubsequence(desiredFloor, hostel.desiredFloor)
         })
         setFilteredHostel(filtered)
     };
@@ -79,55 +89,145 @@ export const Home = () => {
                     )
                 }
 
+                <button
+                    onClick={() => setShowFilter(!showFilter)}
+                    className="btn btn-outline btn-primary mb-4"
+                    >
+                    {showFilter ? "Hide Filter" : "Show Filter"}
+                </button>
+
+
                 {/* Filter Form */}
-                <div className="bg-base-100 rounded-xl shadow p-6 md:p-2">
-                    <form onSubmit={handleFilter} className="space-y-6 sm:flex justify-evenly items-center">
-                        <div>
-                            <label htmlFor="currentHostel" className="block text-lg font-semibold text-primary">
-                                Select Current Hostel
-                            </label>
-                            <select
-                                id="currentHostel"
-                                name="currentHostel"
-                                value={currentHostel}
-                                onChange={e => setCurrentHostel(e.target.value)}
-                                className="select select-bordered w-full"
-                            >
-                                <option value="">
-                                    none
-                                </option>
-                                {hostels.map((hostel)=>(
-                                    <option key={hostel} value={hostel}>{hostel}</option>
-                                ))}
-                            </select>
+
+                {
+                    showFilter && (
+                        <div className="bg-base-100 rounded-xl shadow p-6 md:p-2">
+                            <form onSubmit={handleFilter} className="space-y-6 sm:flex sm:flex-wrap gap-4 justify-evenly items-center">
+
+                                {/* Current Hostel */}
+                                <div>
+                                    <label htmlFor="currentHostel" className="block text-lg font-semibold text-primary">
+                                        Current Hostel
+                                    </label>
+                                    <select
+                                        id="currentHostel"
+                                        name="currentHostel"
+                                        value={currentHostel}
+                                        onChange={e => setCurrentHostel(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {hostels.map(hostel => (
+                                            <option key={hostel} value={hostel}>{hostel}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Current Block */}
+                                <div>
+                                    <label htmlFor="currentBlock" className="block text-lg font-semibold text-primary">
+                                        Current Block
+                                    </label>
+                                    <select
+                                        id="currentBlock"
+                                        name="currentBlock"
+                                        value={currentBlock}
+                                        onChange={e => setCurrentBlock(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {blocks.map(block => (
+                                            <option key={block} value={block}>{block}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Current Floor */}
+                                <div>
+                                    <label htmlFor="currentFloor" className="block text-lg font-semibold text-primary">
+                                        Current Floor
+                                    </label>
+                                    <select
+                                        id="currentFloor"
+                                        name="currentFloor"
+                                        value={currentFloor}
+                                        onChange={e => setCurrentFloor(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {floors.map(floor => (
+                                            <option key={floor} value={floor}>{floor}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Desired Hostel */}
+                                <div>
+                                    <label htmlFor="desiredHostel" className="block text-lg font-semibold text-primary">
+                                        Desired Hostel
+                                    </label>
+                                    <select
+                                        id="desiredHostel"
+                                        name="desiredHostel"
+                                        value={desiredHostel}
+                                        onChange={e => setDesiredHostel(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {hostels.map(hostel => (
+                                            <option key={hostel} value={hostel}>{hostel}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Desired Block */}
+                                <div>
+                                    <label htmlFor="desiredBlock" className="block text-lg font-semibold text-primary">
+                                        Desired Block
+                                    </label>
+                                    <select
+                                        id="desiredBlock"
+                                        name="desiredBlock"
+                                        value={desiredBlock}
+                                        onChange={e => setDesiredBlock(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {blocks.map(block => (
+                                            <option key={block} value={block}>{block}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Desired Floor */}
+                                <div>
+                                    <label htmlFor="desiredFloor" className="block text-lg font-semibold text-primary">
+                                        Desired Floor
+                                    </label>
+                                    <select
+                                        id="desiredFloor"
+                                        name="desiredFloor"
+                                        value={desiredFloor}
+                                        onChange={e => setDesiredFloor(e.target.value)}
+                                        className="select select-bordered w-full"
+                                    >
+                                        <option value="">none</option>
+                                        {floors.map(floor => (
+                                            <option key={floor} value={floor}>{floor}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Filter Button */}
+                                <div className="w-full sm:w-auto">
+                                    <button type="submit" className="btn btn-primary w-full">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div>
-                            <label htmlFor="desiredHostel" className="block text-lg font-semibold text-primary">
-                                Select Desired Hostel
-                            </label>
-                            <select
-                                id="desiredHostel"
-                                name="desiredHostel"
-                                value={desiredHostel}
-                                onChange={e => setDesiredHostel(e.target.value)}
-                                className="select select-bordered w-full"
-                            >
-                                <option value="">
-                                    none
-                                </option>
-                                {hostels.map((hostel)=>(
-                                    <option key={hostel} value={hostel}>{hostel}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                        >
-                            Apply Filter
-                        </button>
-                    </form>
-                </div>
+                    )
+                }
 
                 {/* Display Form */}
                 <div className="mt-2 bg-base-100 rounded-xl shadow p-6 md:p-2 grid md:grid-cols-2 lg:grid-cols-3 gap-2">

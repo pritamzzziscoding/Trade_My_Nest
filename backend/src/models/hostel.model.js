@@ -22,6 +22,14 @@ const hostelSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    desiredFloor : {
+        type : String,
+        required : true,
+    },
+    desiredBlock : {
+        type : String,
+        required : true,
+    },
     description : {
         type : String,
     }
